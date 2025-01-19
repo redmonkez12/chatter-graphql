@@ -22,7 +22,7 @@ export class UsersResolver {
   findOne(@Args('_id') _id: string) {
     return this.usersService.findOne(_id);
   }
-
+m
   @Mutation(() => User)
   updateUser(@Args('updateUserInput') updateUserInput: UpdateUserInput) {
     return this.usersService.update(updateUserInput._id, updateUserInput);
