@@ -1,14 +1,13 @@
 import { Module } from '@nestjs/common';
-import { ConfigModule, ConfigService } from '@nestjs/config';
-import * as Joi from 'joi';
-import { ApolloDriverConfig, ApolloDriver } from '@nestjs/apollo';
-import { GraphQLModule } from '@nestjs/graphql';
-import { LoggerModule } from 'nestjs-pino';
-
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { ConfigModule, ConfigService } from '@nestjs/config';
+import * as Joi from 'joi';
 import { DatabaseModule } from './common/database/database.module';
+import { GraphQLModule } from '@nestjs/graphql';
+import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { UsersModule } from './users/users.module';
+import { LoggerModule } from 'nestjs-pino';
 import { AuthModule } from './auth/auth.module';
 
 @Module({

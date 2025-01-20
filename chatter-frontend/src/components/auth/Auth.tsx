@@ -1,15 +1,26 @@
 import { Button, Stack, TextField } from "@mui/material";
-import { ReactNode, useState } from "react";
+import { ReactNode, useEffect, useState } from "react";
+import { useGetMe } from "../../hooks/userGetMe";
+import { useNavigate } from "react-router";
 
 interface AuthProps {
   submitLabel: string;
   onSubmit: (credentials: { email: string; password: string }) => Promise<void>;
   children: ReactNode;
+  error?: string;
 }
 
-export const Auth = ({ submitLabel, onSubmit, children }: AuthProps) => {
+export const Auth = ({ submitLabel, onSubmit, children, error }: AuthProps) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const { data } = useGetMe();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (data) {
+      navigate("/");
+    }
+  }, [data]);
 
   return (
     <Stack
@@ -26,6 +37,8 @@ export const Auth = ({ submitLabel, onSubmit, children }: AuthProps) => {
         label="Email"
         variant="outlined"
         value={email}
+        error={!!error}
+        helperText={error}
         onChange={(e) => setEmail(e.target.value)}
       />
       <TextField
@@ -33,6 +46,8 @@ export const Auth = ({ submitLabel, onSubmit, children }: AuthProps) => {
         label="Password"
         variant="outlined"
         value={password}
+        error={!!error}
+        helperText={error}
         onChange={(e) => setPassword(e.target.value)}
       />
       <Button variant="contained" onClick={() => onSubmit({ email, password })}>

@@ -12,16 +12,15 @@ export abstract class AbstractRepository<T extends AbstractEntity> {
       ...document,
       _id: new Types.ObjectId(),
     });
-
-    return (await createdDocument.save()).toJSON() as T;
+    return (await createdDocument.save()).toJSON() as unknown as T;
   }
 
   async findOne(filterQuery: FilterQuery<T>): Promise<T> {
-    const document = await this.model.findOne(filterQuery).lean<T>();
+    const document = await this.model.findOne(filterQuery, {}).lean<T>();
 
     if (!document) {
-      this.logger.warn(`Document not found: ${JSON.stringify(filterQuery)}`);
-      throw new NotFoundException('Document not found');
+      this.logger.warn('Document was not found with filterQuery', filterQuery);
+      throw new NotFoundException('Document not found.');
     }
 
     return document;
@@ -31,13 +30,15 @@ export abstract class AbstractRepository<T extends AbstractEntity> {
     filterQuery: FilterQuery<T>,
     update: UpdateQuery<T>,
   ): Promise<T> {
-    const document = await this.model.findOneAndReplace(filterQuery, update, {
-      new: true,
-    });
+    const document = await this.model
+      .findOneAndUpdate(filterQuery, update, {
+        new: true,
+      })
+      .lean<T>();
 
     if (!document) {
-      this.logger.warn(`Document not found: ${JSON.stringify(filterQuery)}`);
-      throw new NotFoundException('Document not found');
+      this.logger.warn('Document was not found with filterQuery', filterQuery);
+      throw new NotFoundException('Document not found.');
     }
 
     return document;
@@ -48,13 +49,6 @@ export abstract class AbstractRepository<T extends AbstractEntity> {
   }
 
   async findOneAndDelete(filterQuery: FilterQuery<T>): Promise<T> {
-    const document = await this.model.findOneAndDelete(filterQuery);
-
-    if (!document) {
-      this.logger.warn(`Document not found: ${JSON.stringify(filterQuery)}`);
-      throw new NotFoundException('Document not found');
-    }
-
-    return document;
+    return this.model.findOneAndDelete(filterQuery).lean<T>();
   }
 }
