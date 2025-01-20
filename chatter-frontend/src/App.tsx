@@ -12,6 +12,7 @@ import { BrowserRouter, useNavigate } from "react-router";
 import { setNavigate } from "./router/router";
 import { useEffect } from "react";
 import Header from "./components/header/Header";
+import { Snackbar } from "./components/snack/Snackbar";
 
 const darkTheme = createTheme({
   palette: {
@@ -36,6 +37,7 @@ function App() {
             <Routes />
           </Guard>
         </Container>
+        <Snackbar/>
       </ThemeProvider>
     </ApolloProvider>
   );

@@ -23,7 +23,7 @@ export const Guard = ({ children }: GuardProps) => {
   useEffect(() => {
     if (error?.networkError) {
       snackVar(UNKNOWN_ERROR_SNACK_MESSAGE);
-    }
+    }   
   }, [error]);
 
   return (
