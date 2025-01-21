@@ -5,10 +5,12 @@ import { useCreateUser } from "../../hooks/useCreateUser";
 import { extractErrorMessage } from "../../utils/errors";
 import { useState } from "react";
 import { UNKNOWN_ERROR_MESSAGE } from "../../constants/errors";
+import { useLogin } from "../../hooks/useLogin";
 
 export function Signup() {
   const [createUser] = useCreateUser();
   const [error, setError] = useState("");
+  const { login } = useLogin();
 
   return (
     <Auth
@@ -24,6 +26,7 @@ export function Signup() {
               },
             },
           });
+          await login({ email, password });
           setError("");
         } catch (err) {
           const errorMessage = extractErrorMessage(err);
