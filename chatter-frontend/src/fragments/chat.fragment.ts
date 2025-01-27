@@ -1,6 +1,6 @@
-import { graphql } from "../gql";
+import { gql } from "@apollo/client";
 
-export const ChatFragment = graphql(`
+export const ChatFragment = gql`
   fragment ChatFragment on Chat {
     _id
     userId
@@ -8,4 +8,4 @@ export const ChatFragment = graphql(`
     userIds
     name
   }
-`);
+`;

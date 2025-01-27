@@ -3,6 +3,7 @@ import {
   createTheme,
   CssBaseline,
   Grid2,
+  Stack,
   ThemeProvider,
 } from "@mui/material";
 import { Routes } from "./Routes";
@@ -26,6 +27,9 @@ function App() {
   const navigate = useNavigate();
   const location = useLocation();
 
+  const showChatList =
+    location.pathname === "/" || location.pathname.includes("chats");
+
   useEffect(() => {
     setNavigate(navigate);
   }, [navigate]);
@@ -36,12 +40,12 @@ function App() {
         <CssBaseline />
         <Header />
         <Guard>
-          {location.pathname === "/" ? (
-            <Grid2 container>
-              <Grid2 columns={{ md: 3 }}>
+          {showChatList ? (
+            <Grid2 container style={{ flex: 1 }}>
+              <Grid2 size={{ md: 3 }}>
                 <ChatList />
               </Grid2>
-              <Grid2 columns={{ md: 9 }}>
+              <Grid2 size={{ md: 9 }}>
                 <Container>
                   <Routes />
                 </Container>
@@ -59,7 +63,9 @@ function App() {
 
 const WrappedApp = () => (
   <BrowserRouter>
-    <App />
+    <Stack sx={{ height: "100%" }}>
+      <App />
+    </Stack>
   </BrowserRouter>
 );
 

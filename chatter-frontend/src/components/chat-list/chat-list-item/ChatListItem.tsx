@@ -10,15 +10,16 @@ import { useNavigate } from "react-router";
 
 interface ChatListProps {
   chat: Chat;
+  selected: boolean
 }
 
-export const ChatListItem = ({ chat }: ChatListProps) => {
+export const ChatListItem = ({ chat, selected }: ChatListProps) => {
     const navigate = useNavigate();
 
   return (
     <>
       <ListItem alignItems="flex-start" disablePadding>
-        <ListItemButton onClick={() => navigate(`/chats/${chat._id}`)}>
+        <ListItemButton onClick={() => navigate(`/chats/${chat._id}`)} selected={selected}>
           <ListItemAvatar>
             <Avatar alt="Remy Sharp" src="/static/iamages/avatar/1.jpg" />
           </ListItemAvatar>
