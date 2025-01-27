@@ -40,20 +40,22 @@ function App() {
         <CssBaseline />
         <Header />
         <Guard>
-          {showChatList ? (
-            <Grid2 container style={{ flex: 1 }}>
-              <Grid2 size={{ md: 3 }}>
-                <ChatList />
+          <Stack sx={{ height: "100%", marginTop: "1rem" }} maxWidth="xl">
+            {showChatList ? (
+              <Grid2 container style={{ flex: 1 }} spacing="5">
+                <Grid2 size={{ md: 3, xs: 12, lg: 4, xl: 3 }}>
+                  <ChatList />
+                </Grid2>
+                <Grid2 size={{ md: 9, xs: 12, lg: 8, xl: 9 }}>
+                  <Container>
+                    <Routes />
+                  </Container>
+                </Grid2>
               </Grid2>
-              <Grid2 size={{ md: 9 }}>
-                <Container>
-                  <Routes />
-                </Container>
-              </Grid2>
-            </Grid2>
-          ) : (
-            <Routes />
-          )}
+            ) : (
+              <Routes />
+            )}
+          </Stack>
         </Guard>
         <Snackbar />
       </ThemeProvider>
@@ -63,9 +65,7 @@ function App() {
 
 const WrappedApp = () => (
   <BrowserRouter>
-    <Stack sx={{ height: "100%" }}>
-      <App />
-    </Stack>
+    <App />
   </BrowserRouter>
 );
 
